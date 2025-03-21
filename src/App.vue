@@ -1,82 +1,70 @@
 <template>
+
   <div class="appWrapper">
-    <div>
-      <h2>Актуальные новости {{ now }}</h2>
-      <span>Открыто: <strong>{{ openRate }}</strong> | Прочитано <strong>{{ readRate }}</strong></span>
+    <div class="card">
+      <h2>Dynamic and async components</h2>
+
+      <app-button
+        class="btns"
+        :color="oneColor"
+        @action="active = 'one'"
+      >One</app-button>
+      <app-button
+        class="btns"
+        :color="twoColor"
+        @action="active = 'two'"
+      >Two</app-button>
     </div>
-    <NewsItem
-    v-for="item in news"
-    :title="item.title"
-    :key="item.id" :id="item.id"
-    :isOpen="item.isOpen"
-    :wasRead="item.wasRead"
-    @open-news="openNews"
-    @read-news="readNews"
-    @unmark-news="unmark"
-    />
+    <keep-alive>
+      <component :is="componentName"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import NewsItem from './components/NewsItem.vue'
+import AppButton from './components/AppButton.vue'
+import AppTextOne from './components/AppTextOne.vue'
+import AppTextTwo from './components/AppTextTwo.vue'
 
 export default {
-  components: {
-    NewsItem
-  },
+  components: { AppButton, AppTextOne, AppTextTwo },
   data () {
     return {
-      now: new Date().toLocaleDateString(),
-      news: [
-        { title: 'Title 1', id: 1, wasRead: false },
-        { title: 'Title 2', id: 2, wasRead: false },
-        { title: 'Title 3', id: 3, wasRead: false },
-        { title: 'Title 4', id: 4, wasRead: false },
-        { title: 'Title 5', id: 5, wasRead: false }
-      ],
-      openRate: 0,
-      readRate: 0
+      active: 'one'
     }
   },
-  methods: {
-    openNews () {
-      this.openRate++
+  computed: {
+    componentName () {
+      return 'app-text-' + this.active
     },
-    readNews (id) {
-      const idx = this.news.findIndex(news => news.id === id)
-      this.news[idx].wasRead = true
-      this.readRate++
+    oneColor () {
+      return this.active === 'one' ? 'readable' : 'primary'
     },
-    unmark (id) {
-      const idx = this.news.findIndex(news => news.id === id)
-      this.news[idx].wasRead = false
-      this.readRate--
-    }
-  },
-  provide () {
-    return {
-      title: 'Список всех новостей',
-      news: this.news
+    twoColor () {
+      return this.active === 'two' ? 'readable' : 'primary'
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-h2 {
-  color: white;
-}
+<style scoped lang="scss">
+    .appWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    background-color: rgb(38, 38, 73);
+    padding: 20px;
+  }
 
-span {
-  color: white;
-}
+  .card {
+    width: 600px;
+    border-radius: 15px;
+    background-color: azure;
+    padding: 15px;
+  }
 
-.appWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  background-color: rgb(38, 38, 73);
-  padding: 20px;
-}
+  .btns {
+    margin: 0 10px;
+  }
 </style>

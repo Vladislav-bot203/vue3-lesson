@@ -13,7 +13,7 @@ export default {
       type: String,
       default: '',
       validator (value) {
-        return ['readable', 'primary', 'danger'].includes(value)
+        return ['readable', 'primary', 'danger', ''].includes(value)
       }
     }
   }
@@ -23,7 +23,7 @@ export default {
 
 <style lang="scss" scoped>
     .button {
-        border: 0px;
+        border: 0;
         border-radius: 10px;
         padding: 8px;
 
@@ -40,10 +40,12 @@ export default {
     .readable {
         color: white;
         background-color: rgb(119, 175, 156);
+        border: 0;
     }
 
     .danger {
         background-color: rgb(192, 101, 101);
         color: white;
+        border: 0;
     }
 </style>
