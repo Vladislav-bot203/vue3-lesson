@@ -16,6 +16,11 @@ export default {
         return ['readable', 'primary', 'danger', ''].includes(value)
       }
     }
+  },
+  methods: {
+    btnLog () {
+      console.log('I am a button')
+    }
   }
 
 }
