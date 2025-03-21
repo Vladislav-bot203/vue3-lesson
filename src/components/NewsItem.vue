@@ -1,20 +1,40 @@
 <template>
-    <div>
+    <div class="newsItem">
         <h3>{{ title }}</h3>
-        <button  @click="open">{{ isOpen ? 'Закрыть' : 'Открыть' }}</button>
-        <button v-if="wasRead" @click="$emit('unmark-news', id)">Отметить непрочитанной</button>
+        <app-button
+        class="openBtn"
+        color="primary"
+        @action="open"
+        >{{ isOpen ? 'Закрыть' : 'Открыть' }}</app-button>
+        <app-button
+        color="danger"
+        v-if="wasRead"
+        @action="$emit('unmark-news', id)"
+        >Отметить непрочитанным</app-button>
         <div v-if="isOpen">
             <hr />
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero sint atque amet possimus qui libero sapiente fugit unde veritatis. Nulla repudiandae corrupti architecto, repellat distinctio voluptas ea veritatis vero a.</p>
-            <button v-show="!wasRead" @click="mark">Прочесть новость</button>
+            <app-button
+            color="readable"
+            v-show="!wasRead"
+            @action="mark"
+            >Прочесть</app-button>
+
+            <app-news-list></app-news-list>
         </div>
     </div>
 </template>
 
 <script>
+import AppButton from './AppButton.vue'
+import AppNewsList from './AppNewsList.vue'
 
 export default {
 // emits: ['open-news']
+  components: {
+    'app-button': AppButton,
+    'app-news-list': AppNewsList
+  },
   emits: {
     'open-news': null,
     'read-news' (id) {
@@ -69,3 +89,16 @@ export default {
 //   props: ['title']
 }
 </script>
+
+<style lang="scss" scoped>
+  .newsItem {
+    border-radius: 10px;
+    background-color: rgb(230, 219, 205);
+    padding: 15px 10px;
+    width: 60%;
+  }
+
+  .openBtn {
+    margin-right: 20px;
+  }
+</style>
