@@ -1,0 +1,12 @@
+html {
+    height: 100%;
+    background-color: rgb(38, 38, 73);
+}
+
+body {
+    height: max-content;
+}
+
+#app {
+    height: 100%;
+}
