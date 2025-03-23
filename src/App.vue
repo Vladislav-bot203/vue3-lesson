@@ -1,29 +1,39 @@
 <template>
   <div class="appWrapper">
-    <app-alert-lesson
-    v-if="alert"
-     text="Это очень важное сообщение, будьте бдительны"
-     title="Внимание!"
-     type="primary"
-     :closable="true"
-     @close="alert = false"
-    ></app-alert-lesson>
     <div class="card">
-      <button class="add-button active" @click="toggleAlert">{{ alert ? 'Close message' : 'Open message'}}</button>
-    </div>
+      <h2>{{ $i18n('app.title') }}</h2>
 
-    <app-blog></app-blog>
+      <button class="app-button active" @click="$alert('test')">{{ $i18n('app.alertBtn') }}</button>
+      <button class="app-button active" @click="changeLang">{{ $i18n('app.changeBtn') }}</button>
+      <button class="app-button active" @click="modal = !modal">{{ $i18n('app.openModal') }}</button>
+
+      <teleport to="body">
+        <app-modal
+          v-if="modal"
+          @close="modal = false"
+        ></app-modal>
+      </teleport>
+    </div>
   </div>
 </template>
 
 <script>
-import AppAlertLesson from './components/AppALertLesson.vue'
-import AppBlog from './components/AppBlog.vue'
-import alertMixin from './mixins/alertMixin'
+import AppModal from './components/AppModal.vue'
 
 export default {
-  components: { AppAlertLesson, AppBlog },
-  mixins: [alertMixin]
+  components: { AppModal },
+  inject: ['changeI18N'],
+  methods: {
+    changeLang () {
+      this.changeI18N()
+      this.$forceUpdate()
+    }
+  },
+  data () {
+    return {
+      modal: false
+    }
+  }
 }
 
 </script>
@@ -42,6 +52,7 @@ export default {
 
 .card {
   display:  flex;
+  flex-direction: column;
   padding: 20px;
   justify-content: center;
   margin-top: 20px;
@@ -66,6 +77,13 @@ export default {
         &:hover {
             cursor: pointer;
         }
+    }
+    .form-control {
+      width: 100%;
+    }
+
+    input {
+      width: 100%;
     }
 
 @media (max-width: 900px) {
