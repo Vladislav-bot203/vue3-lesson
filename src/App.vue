@@ -1,33 +1,11 @@
 <template>
   <div class="appWrapper">
-    <div class="cv-container">
-      <app-cv-constructor
-        @add-element="renderElement"
-      ></app-cv-constructor>
-      <app-cv-preview
-        :elements="elements"
-      ></app-cv-preview>
-    </div>
-    <button class="add-button active">Load comments</button>
   </div>
 </template>
 
 <script>
-import AppCvConstructor from './components/AppCvConstructor.vue'
-import AppCvPreview from './components/AppCvPreview.vue'
 
 export default {
-  components: { AppCvConstructor, AppCvPreview },
-  data () {
-    return {
-      elements: []
-    }
-  },
-  methods: {
-    renderElement (type, text) {
-      this.elements.push({ type, text })
-    }
-  }
 }
 
 </script>
