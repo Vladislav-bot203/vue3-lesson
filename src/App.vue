@@ -1,11 +1,29 @@
 <template>
   <div class="appWrapper">
+    <app-alert-lesson
+    v-if="alert"
+     text="Это очень важное сообщение, будьте бдительны"
+     title="Внимание!"
+     type="primary"
+     :closable="true"
+     @close="alert = false"
+    ></app-alert-lesson>
+    <div class="card">
+      <button class="add-button active" @click="toggleAlert">{{ alert ? 'Close message' : 'Open message'}}</button>
+    </div>
+
+    <app-blog></app-blog>
   </div>
 </template>
 
 <script>
+import AppAlertLesson from './components/AppALertLesson.vue'
+import AppBlog from './components/AppBlog.vue'
+import alertMixin from './mixins/alertMixin'
 
 export default {
+  components: { AppAlertLesson, AppBlog },
+  mixins: [alertMixin]
 }
 
 </script>
@@ -22,13 +40,16 @@ export default {
   height: 100%;
 }
 
-.cv-container {
+.card {
   display:  flex;
+  padding: 20px;
   justify-content: center;
   margin-top: 20px;
   width: 80%;
   align-items: stretch;
   gap: 20px;
+  background-color: aliceblue;
+  border-radius: 20px;
 }
 
 .add-button {
