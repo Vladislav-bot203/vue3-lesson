@@ -2,12 +2,8 @@ import { createApp, defineAsyncComponent } from 'vue'
 import App from './App.vue'
 import './theme.css'
 import translatePlugin from './plugins/translatePlugin'
+import router from './router'
 // import alertMixin from './mixins/alertMixin'
-
-const app = createApp(App)
-app.component('async-component', defineAsyncComponent(() => {
-  return import('./components/AsyncComponent.vue')
-}))
 
 const ru = {
   app: {
@@ -26,6 +22,16 @@ const en = {
     openModal: 'Open modal'
   }
 }
+
+const app = createApp(App)
+
+app.use(router)
+app.use(translatePlugin, { ru, en })
+
+app.component('async-component', defineAsyncComponent(() => {
+  return import('./components/AsyncComponent.vue')
+}))
+
 // global mixin
 // app.mixin(alertMixin)
 
@@ -35,7 +41,5 @@ const en = {
 //     el.focus()
 //   }
 // })
-
-app.use(translatePlugin, { ru, en })
 
 app.mount('#app')
